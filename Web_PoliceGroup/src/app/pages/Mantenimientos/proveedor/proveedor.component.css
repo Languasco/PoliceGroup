@@ -1,0 +1,79 @@
+ .tableFixHead {
+     overflow-y: auto;
+     height: 400px;
+ }
+ 
+ .tableFixHead thead th {
+     position: sticky;
+     top: 0;
+ }
+ 
+ .nav {
+     padding: 5px;
+     font-family: 'Goldman', cursive;
+     font-size: 15px;
+ }
+ 
+ .TabControl {
+     cursor: pointer;
+ }
+ 
+ .nav-pills .nav-link.active,
+ .nav-pills .show>.nav-link {
+     color: black !important;
+     background-color: cyan !important;
+ }
+ 
+ fieldset {
+     border: 1px solid #ddd !important;
+     margin: 0;
+     min-width: 0;
+     padding: 10px;
+     position: relative;
+     border-radius: 4px;
+     padding-left: 10px!important;
+ }
+ 
+ legend {
+     font-size: 14px;
+     font-weight: bold;
+     margin-bottom: 0px;
+     width: 60%;
+     border: 0.5px solid #ddd;
+     border-radius: 4px;
+     padding: 5px 5px 5px 10px;
+     background-color: #ffffff;
+     color: #ff8457;
+ }
+ 
+ .fa-times-circle {
+     color: gray;
+ }
+ 
+ .fa-arrow-circle-left {
+     color: gray;
+ }
+ 
+ @media (min-width: 576px) {
+     .card-columns {
+         column-count: 4;
+     }
+ }
+ 
+ @media (min-width: 768px) {
+     .card-columns {
+         column-count: 4;
+     }
+ }
+ 
+ @media (min-width: 992px) {
+     .card-columns {
+         column-count: 5;
+     }
+ }
+ 
+ @media (min-width: 1200px) {
+     .card-columns {
+         column-count: 5;
+     }
+ }

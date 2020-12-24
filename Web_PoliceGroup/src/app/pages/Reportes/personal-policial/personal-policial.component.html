@@ -1,0 +1,388 @@
+<div class="card border-left-warning  shadow   ">
+    <div class="card-header">
+        <h5 class="headerTitle"> REPORTE DE PERSONAL POLICIAL </h5>
+    </div>
+    <div class="card-body">
+
+        <form [formGroup]="formParamsFiltro" style="margin-top: -15px;">
+            <div class="row">
+                <div class="col-md-4">
+                    <label for=""> Empresa</label>
+                    <select class="form-control comboBox" formControlName="idEmpresa">
+                        <option value="0"> [ -- SELECCIONE -- ]</option>
+                        <option [value]="empresa.id_Empresa" *ngFor="let empresa of empresas">{{empresa.razonSocial_Empresa}}</option>
+                    </select>
+                </div>
+                <div class="col-sm-6 col-md-12 col-lg-4 text-center">
+                    <br>
+                    <div class="text-center">
+                        <button class="btn btn-primary " (click)="mostrarInformacion()" style="font-size: 13px;">  <i class="fas fa-search"> Mostrar</i> </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <hr>
+
+        <div class="d-flex justify-content-between" style=" margin-top: -15px;">
+            <div class="p-2 bd-highlight"> </div>
+            <div class="p-2 bd-highlight" style="width: 50%;">
+                <input type="text" class="form-control form-control-sm " placeholder="Auto Busquedas" maxlength="50" [(ngModel)]="filtrarMantenimiento">
+            </div>
+            <div class="p-2 bd-highlight"> </div>
+        </div>
+
+        <div class="search-results tableFixHead">
+            <table class="table  table-hover table-sm">
+                <thead class="theadTable">
+
+                    <tr style="height: 40px !important;">
+                        <th scope="col">#</th>
+                        <th scope="col">Empresa</th>
+                        <th scope="col">Dni</th>
+                        <th scope="col">nombres y Apellidos</th>
+                        <th class="text-center">Visualizar Ficha</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of personales |  filter: filtrarMantenimiento  ; index as j" [ngStyle]="item.estado == 0 && {'color': 'red'}">
+                        <th scope="row"> {{j + 1}} </th>
+                        <td>{{item.razonSocial_Empresa}}</td>
+                        <td>{{item.nroDocumento_Personal}}</td>
+                        <td>{{item.apellidos_Personal}} {{item.nombres_Personal}} </td>
+
+                        <td class="text-center">
+                            <a class="puntero linkOpcion" (click)="editar(item) " title="Visualizar Ficha"> Ver</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+
+
+<div class="modal fade " id="modal_mantenimiento" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel  " aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable " role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="p-3 card ">
+                    <div class="d-flex justify-content-between flotante">
+                        <div class=" bd-highlight">
+                            <i class="fas fa-arrow-circle-left  fa-2x puntero" title="Retornar" (click)="cerrarModal()">  </i>
+                        </div>
+                        <div class=" bd-highlight">
+                            <h5 class="headerTitle"> REGISTRO DE POLICIA </h5>
+                        </div>
+                        <div class=" bd-highlight">
+                            <i class="far fa-times-circle fa-2x puntero" title="Retornar" (click)="cerrarModal()">  </i>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <ul class="nav nav-pills mb-3 mt-2" id="pills-tab" role="tablist" style="background-color:  #ffd100; margin-bottom: 2px !important;">
+                    <li class="nav-item TabControl" *ngFor="let nameTab of tabControlDetalle; let first = first;">
+                        <a class="nav-link active" style="color:white" (click)="selectedTabControlDetalle = nameTab" data-toggle="pill" [class.active]="selectedTabControlDetalle===nameTab" role="tab" aria-controls="pills-home" aria-selected="true">{{nameTab}}</a>
+                    </li>
+                </ul>
+
+                <div class="">
+                    <div class="tab-content" id="pills-tabContent">
+                        <div *ngIf="selectedTabControlDetalle === tabControlDetalle[0]" role="tabpanel" class="tab-pane active">
+
+                            <div class="card border-warning">
+                                <div class="card-body">
+
+                                    <div class="row">
+                                        <div class="col-md-8 mb-2">
+
+                                            <form [formGroup]="formParams" style=" margin-top: -15px;">
+
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <label> ID Personal</label>
+                                                        <input type="text" class="form-control form-control-sm disabledForm " formControlName="id_Personal">
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <label for=""> Empresa</label>
+                                                        <select id="cbo_empresa" class="form-control comboBox" formControlName="id_Empresa">
+                                                            <option value="0"> [ --SELECCIONE-- ]</option>
+                                                            <option [value]="empresa.id_Empresa" *ngFor="let empresa of empresas">{{empresa.razonSocial_Empresa}}</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <label for=""> Tipo Doc</label>
+                                                        <select class="form-control comboBox" formControlName="id_TipoDoc">
+                                                            <option value="0"> [ --SELECCIONE-- ]</option>
+                                                            <option [value]="tipo.id_detalleTabla" *ngFor="let tipo of tipoDocumentos">{{tipo.descripcion_grupoTabla}}</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <label> Nro Documento</label>
+                                                        <input type="number" class="form-control form-control-sm  " maxlength="20" formControlName="nroDocumento_Personal">
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <label> Fecha Nacimiento</label>
+                                                        <input class="form-control" #datepickerYMD="bsDatepicker" bsDatepicker formControlName="fecha_Nacimiento" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY'  }">
+                                                    </div>
+                                                </div>
+
+                                                <div class="row mt-2">
+                                                    <div class="col-md-6">
+                                                        <label> Apellidos </label>
+                                                        <input type="text" class="form-control " maxlength="100" formControlName="apellidos_Personal">
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label> Nombres </label>
+                                                        <input type="text" class="form-control " maxlength="100" formControlName="nombres_Personal">
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <label for=""> Distrito</label>
+                                                        <select class="form-control comboBox" id="cbo_distrito" formControlName="id_Distrito">
+                                                            <option value="0"> [ --SELECCIONE-- ]</option>
+                                                            <option [value]="dist.id_Distrito" *ngFor="let dist of distritos">{{dist.nombreDistrito}}</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <label> Direccion </label>
+                                                        <input type="text" class="form-control " maxlength="250" formControlName="direccion_Personal">
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label for=""> Cargo</label>
+                                                        <select class="form-control comboBox" id="cbo_cargo" formControlName="id_Cargo">
+                                                    <option value="0"> [ --SELECCIONE-- ]</option>
+                                                    <option [value]="cargo.id_Cargo" *ngFor="let cargo of cargos">{{cargo.nombreCargo}}</option>
+                                                </select>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label> Estado</label>
+                                                        <select class="form-control comboBox" formControlName="estado">
+                                                    <option value="-1"> [ --SELECCIONE-- ]</option>
+                                                    <option value="1"> Activo </option>
+                                                    <option value="0"> Anulado </option>
+                                                </select>
+                                                    </div>
+                                                </div>
+                                            </form>
+
+                                        </div>
+
+
+                                        <div class="col-md-6 col-lg-4">
+                                            <div class="row" style="margin-top: -10px;">
+                                                <fieldset class="shadow  ">
+                                                    <legend>Imagen</legend>
+                                                    <div class="panel panel-default ">
+                                                        <div class="panel-body">
+                                                            <div class="row ">
+                                                                <div class="col-md-12">
+                                                                    <div class="col-sm-12">
+                                                                        <div style="text-align: center" title=" Imagen del policia">
+                                                                            <img [src]="imgPersonal" title=" Click para agregar o reemplazar la imagen" class="mx-auto d-block" style="width: 100%;height: 230px;">
+                                                                        </div>
+                                                                        <label class="import-file" style="display:none;">                                                  
+                                                                            <input type="file" id="inputFileOpen" class="form-control-file btn" name="file" accept="image/x-png,image/gif,image/jpeg" (change)="onFotoChange($event)" />
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </fieldset>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- 
+                                    <div class="d-flex justify-content-center">
+                                        <div class="p-2 bd-highlight">
+                                            <button class="btn btn-success" (click)="saveUpdate()" title="Guardar la informacion"> <i class="fas fa-save"> Grabar</i></button>
+                                        </div>
+                                    </div> -->
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div *ngIf="selectedTabControlDetalle === tabControlDetalle[1]" role="tabpanel" class="tab-pane active">
+
+                            <div class="card border-warning">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <fieldset class="shadow">
+                                                <legend> DOCUMENTOS ADJUNTOS </legend>
+                                                <div class="panel panel-default ">
+                                                    <div class="panel-body" *ngIf="idPolicia_Global > 0">
+
+                                                        <div class="card border-left-warning shadow ">
+                                                            <div class=" tableFixHead" style="height: 300px;">
+                                                                <table class="table  table-bordered table-hover table-sm ">
+                                                                    <thead class="theadTable">
+                                                                        <tr>
+                                                                            <th scope="col">#</th>
+                                                                            <th scope="col">TIPO DOCUMENTO</th>
+                                                                            <th scope="col">FECHA INICIAL</th>
+                                                                            <th scope="col">FECHA VENCIMIENTO</th>
+                                                                            <th scope="col">NOMBRE ARCHIVO</th>
+                                                                            <!-- <th scope="col">Eliminar</th> -->
+                                                                            <th scope="col">Descargar</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr *ngFor="let item of archivosImportados; index as j">
+                                                                            <th scope="row"> {{j + 1}} </th>
+                                                                            <td>{{item.nombre_Documento_Policial}}</td>
+                                                                            <td>{{item.fechaInicial}}</td>
+                                                                            <td>{{item.fechaTermino}}</td>
+                                                                            <td>{{item.nombreArchivo}}</td>
+                                                                            <!-- <td class="text-center">
+                                                                                <a class="puntero linkOpcion" (click)=" eliminarArchivoSeleccionado(item) " title="quitar el registro"> Eliminar</a>
+                                                                            </td> -->
+                                                                            <td class="text-center">
+                                                                                <a class="puntero linkOpcion" (click)=" downloadFileExport(item.id_Personal_Documento) " title="descargar"> Descargar</a>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="cerrarModal()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade " id="modal_importar" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel  " aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="p-3 card ">
+                    <div class="d-flex justify-content-between flotante">
+                        <div class=" bd-highlight">
+                            <i class="fas fa-arrow-circle-left  fa-2x puntero" title="Retornar" (click)="cerrarModal_importacion()">  </i>
+                        </div>
+                        <div class=" bd-highlight">
+                            <h5 class="headerTitle"> IMPORTAR PERSONAL </h5>
+                        </div>
+                        <div class=" bd-highlight">
+                            <i class="far fa-times-circle fa-2x puntero" title="Retornar" (click)="cerrarModal_importacion()">  </i>
+                        </div>
+                    </div>
+                </div>
+
+
+                <form [formGroup]="formParamsFile" class="mt-2">
+                    <div class="row mb-2">
+                        <div class="col-md-4">
+                            <label for=""> Empresa</label>
+                            <select class="form-control comboBox" formControlName="idEmpresa">
+                                <option value="0"> [ --SELECCIONE-- ]</option>
+                                <option [value]="empresa.id_Empresa" *ngFor="let empresa of empresas">{{empresa.razonSocial_Empresa}}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row ">
+                        <div class="col-md-6">
+                            <div class="botonFile">
+                                <input type="file" class="form-control-file btn" formControlName="file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" (change)="onFileChange($event)" />
+                            </div>
+
+                        </div>
+                        <div class="col-md-6 mt-1">
+                            <div class="center-text ">
+                                <button id="btnVer" class="btn btn-sm btn-success disabledForm" (click)="subirArchivo()">  <i class="fas fa-eye"> Ver</i> </button>
+                                <button class="btn btn-sm btn-warning ml-2" (click)="blankFile()">  <i class="fa fa-plus-circle"> Nuevo</i> </button>
+                                <button class="btn btn-sm btn-primary ml-2" (click)="downloadFormat()">  <i class="fas fa-file-download"> Formato</i> </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div *ngFor="let fil of filesExcel; let i=index">
+                            <div class="alert alert-danger text-center" *ngIf="fil.status === 'error'">
+                                <h5>Sistemas</h5>
+                                <hr>
+                                <p><small>{{fil.message}}</small></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class=" tableFixHead table-responsive">
+                    <table class="table table-hover table-sm">
+                        <thead class="theadTable">
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Empresa</th>
+                                <th scope="col">Nro Documento</th>
+                                <th scope="col">Apellidos</th>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Cargo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of importaciones; index as j" style="color: black;">
+                                <th scope="row"> {{j + 1}} </th>
+                                <td>{{item.empresa}}</td>
+                                <td>{{item.nroDocumento}}</td>
+                                <td>{{item.apellidos}}</td>
+                                <td>{{item.nombre}}</td>
+                                <td>{{item.cargo}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <hr>
+                <!--  -->
+                <div class="text-center" *ngIf="importaciones.length >0">
+                    <button id="btnGrabar" class="btn  btn-sm  btn-danger disabledForm" (click)="guardar_importacionPersonal()" title="Grabar el personal importadas"> <i class="fas fa-save"></i> Grabar
+                    </button>
+                </div>
+                <br>
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="cerrarModal_importacion()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

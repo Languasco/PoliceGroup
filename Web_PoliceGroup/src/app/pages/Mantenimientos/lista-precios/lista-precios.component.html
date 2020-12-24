@@ -1,0 +1,169 @@
+<div class="card border-left-warning  shadow   ">
+    <div class="card-header">
+        <h5 class="headerTitle"> MANTENIMIENTO DE LISTA DE PRECIOS </h5>
+    </div>
+    <div class="card-body">
+
+        <form [formGroup]="formParamsFiltro">
+            <div class="row" style="    margin-top: -15px;">
+                <div class="col-md-4">
+                    <label for=""> Tipo Orden Trabajo</label>
+                    <select class="form-control comboBox" formControlName="idtipoOrdenT">
+                        <option value="0"> [ --TODOS-- ]</option>
+                        <option [value]="tipo.id_detalleTabla" *ngFor="let tipo of tipoOrdenTrabajo">{{tipo.descripcion_grupoTabla}}</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label for=""> Estado</label>
+                    <select class="form-control comboBox" formControlName="idEstado">
+                        <!-- <option value="0"> [ --SELECCIONE-- ]</option>
+                        <option [value]="estado.id_Estado" *ngFor="let estado of estados">{{estado.descripcion_estado}}</option> -->
+                        <option value="1"> Activo </option>
+                        <option value="0"> Inactivo </option>
+                    </select>
+                </div>
+                <div class="col-sm-6 col-md-12 col-lg-4 text-center">
+                    <br>
+                    <div class="text-center">
+                        <button class="btn btn-primary " (click)="mostrarInformacion()" style="font-size: 13px;">  <i class="fas fa-search"> Mostrar</i> </button>
+                        <button class="btn btn-warning ml-2 " (click)="nuevo()" style="font-size: 13px;">  <i class="fa fa-plus-circle"> Nuevo</i> </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <hr>
+
+        <div class="d-flex justify-content-between" style=" margin-top: -15px;">
+            <div class="p-2 bd-highlight"> </div>
+            <div class="p-2 bd-highlight" style="width: 50%;">
+                <input type="text" class="form-control form-control-sm " placeholder="Auto Busquedas" maxlength="50" [(ngModel)]="filtrarMantenimiento">
+            </div>
+            <div class="p-2 bd-highlight"> </div>
+        </div>
+
+        <div class="search-results tableFixHead">
+            <table class="table  table-hover table-sm">
+                <thead class="theadTable">
+
+                    <tr style="height: 40px !important;">
+                        <th scope="col">#</th>
+                        <th scope="col">Tipo Orden Trabajo</th>
+                        <th scope="col">Precio</th>
+                        <th scope="col">Cubicaje Inicial</th>
+                        <th scope="col">Cubicaje Final</th>
+
+                        <th scope="col">Estado</th>
+                        <th class="text-center">Editar</th>
+                        <th class="text-center">Anular</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of precios |  filter: filtrarMantenimiento  ; index as j" [ngStyle]="item.estado == 0 && {'color': 'red'}">
+                        <th scope="row"> {{j + 1}} </th>
+                        <td>{{item.descripcion_tipoOT}}</td>
+                        <td>{{item.precio | number:'0.1-5'}}</td>
+                        <td>{{item.cubicaje}}</td>
+                        <td>{{item.cubicajeFinal}}</td>
+                        <td>{{item.descripcion_estado}}</td>
+                        <td class="text-center">
+                            <a class="puntero linkOpcion" (click)="editar(item) " title="editar"> Editar</a>
+                        </td>
+                        <td class="text-center">
+                            <a class="puntero linkOpcion" (click)="anular(item) " title="anular"> Anular</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+
+
+
+
+
+
+
+<div class="modal fade " id="modal_mantenimiento" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel  " aria-hidden="true">
+    <div class="modal-dialog  " role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="p-3 card ">
+                    <div class="d-flex justify-content-between flotante">
+                        <div class=" bd-highlight">
+                            <i class="fas fa-arrow-circle-left  fa-2x puntero" title="Retornar" (click)="cerrarModal()">  </i>
+                        </div>
+                        <div class=" bd-highlight">
+                            <h5 class="headerTitle"> REGISTRO DE LISTA DE PRECIOS </h5>
+                        </div>
+                        <div class=" bd-highlight">
+                            <i class="far fa-times-circle fa-2x puntero" title="Retornar" (click)="cerrarModal()">  </i>
+                        </div>
+                    </div>
+                </div>
+                <hr style="background-color: white;">
+
+                <form [formGroup]="formParams" style=" margin-top: -15px;">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label> ID </label>
+                            <input type="text" class="form-control form-control-sm disabledForm " formControlName="id_Precio">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-8">
+                            <label for=""> Tipo Orden Trabajo</label>
+                            <select id="cbo_tipoOT" class="form-control comboBox" formControlName="id_TipoOrdenTrabajo">
+                                    <option value="0"> [ --SELECCIONE-- ]</option>
+                                    <option [value]="tipo.id_detalleTabla" *ngFor="let tipo of tipoOrdenTrabajo">{{tipo.descripcion_grupoTabla}}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label> Precio </label>
+                            <input type="number" class="form-control " formControlName="precio">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label> Cubicaje </label>
+                            <input type="text" class="form-control " maxlength="100" formControlName="cubicaje">
+                        </div>
+                        <div class="col-md-6">
+                            <label> Cubicaje Final </label>
+                            <input type="text" class="form-control " maxlength="100" formControlName="cubicajeFinal">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label> Estado</label>
+                            <select class="form-control comboBox" formControlName="estado">
+                                <option value="-1"> [ --SELECCIONE-- ]</option>
+                                <option value="1"> Activo </option>
+                                <option value="0"> Anulado </option>
+                            </select>
+                        </div>
+                    </div>
+
+                </form>
+                <br>
+
+                <div class="d-flex justify-content-center">
+                    <div class="p-2 bd-highlight">
+                        <button class="btn btn-success" (click)="saveUpdate()" title="Guardar la informacion"> <i class="fas fa-save"> Grabar</i></button>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="cerrarModal()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,88 @@
+<div class="card border-left-warning  shadow   ">
+    <div class="card-header">
+        <h5 class="headerTitle"> CONFIGURACION DE ZONAS</h5>
+    </div>
+    <div class="card-body">
+
+        <div class="row">
+            <div class="col-md-4  ">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item active"> Empresa</li>
+                    <li class="list-group-item" *ngFor="let item of proveedor;  index as i">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" [id]="acumudadorEmpresa+i" [value]="item.id_Empresa" (change)="change_empresa($event)">
+                            <label class="form-check-label" [for]="acumudadorEmpresa+i">{{item.razonSocial_Empresa}}  </label>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="col-md-4">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item active"> Area</li>
+                    <li class="list-group-item" *ngFor="let item of areas; index as i">
+                        <div class="custom-control custom-checkbox " style="margin-bottom:-5px;">
+                            <input type="checkbox" [id]="acumudadorArea+i" [(ngModel)]="item.checkeado" (change)="change_area($event)" [name]="item.nombreServicio" class="custom-control-input">
+                            <label class="custom-control-label" [for]="acumudadorArea+i">  {{item.nombreServicio}} </label>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="col-md-4">
+
+                <div class="row " *ngIf="areas.length>0">
+                    <div class="col-md-12">
+                        <label> Zonas</label>
+                        <select class="form-control comboBox" [(ngModel)]="idZonas" (change)="change_zona($event)">
+                                <option value="0"> [ -- TODOS-- ]</option>
+                                <option [value]="zona.id_Zona" *ngFor="let zona of zonas">{{zona.nombre_Zona}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="search-results tableFixHead">
+                    <table class="table  table-hover table-sm">
+                        <thead class="theadTable">
+
+                            <tr style="height: 40px !important;">
+                                <th>
+                                    <div class="custom-control custom-checkbox custom-control-inline" *ngIf="distritos.length>0">
+                                        <input type="checkbox" [id]="999" [(ngModel)]="checkeadoAll" (click)="marcarTodos()" class="custom-control-input">
+                                        <label class="custom-control-label" [for]="999"> Marcar </label>
+                                    </div>
+                                </th>
+                                <th class="text-center">Estado
+                                    <input type="text" class="form-control form-control-sm " placeholder="Auto Busquedas" maxlength="50" [(ngModel)]="filtrar"> </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of distritos | filter: filtrar ">
+                                <td>
+                                    <div class="custom-control custom-checkbox custom-control-inline ">
+                                        <input type="checkbox" [id]="item.id_Distrito" [(ngModel)]="item.checkeado" class="custom-control-input">
+                                        <label class="custom-control-label" [for]="item.id_Distrito"> </label>
+                                    </div>
+                                </td>
+                                <td>
+                                    {{item.nombreDistrito}}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="text-center">
+            <div class="d-flex justify-content-end">
+                <div class="p-2 bd-highlight">
+                    <button class="btn btn-success" (click)="guardarConfiguracionZonas()" title="Guardar la configuracion"> <i class="fas fa-save"> Grabar</i></button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

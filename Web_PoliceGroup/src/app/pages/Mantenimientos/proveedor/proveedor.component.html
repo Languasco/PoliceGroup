@@ -1,0 +1,253 @@
+<div class="card border-left-warning  shadow   ">
+    <div class="card-header">
+        <h5 class="headerTitle"> MANTENIMIENTO DE PROVEEDORES</h5>
+    </div>
+    <div class="card-body">
+
+        <div class="d-flex justify-content-center">
+            <div class="p-2 bd-highlight">
+
+            </div>
+            <div class="p-2 bd-highlight" style="width: 60%;">
+                <form [formGroup]="formParamsFiltro">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for=""> Estado</label>
+                            <select class="form-control comboBox" formControlName="idEstado">
+                                <option value="1"> Activo </option>
+                                <option value="0"> Inactivo </option>
+                                <!-- <option [value]="estado.id_Estado" *ngFor="let estado of estados">{{estado.descripcion_estado}}</option> -->
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <br>
+                            <div class="">
+                                <button class="btn btn-primary " (click)="mostrarInformacion()" style="font-size: 13px;">  <i class="fas fa-search"> Mostrar</i> </button>
+                                <button class="btn btn-warning ml-2" (click)="nuevo()" style="font-size: 13px;">  <i class="fa fa-plus-circle"> Nuevo</i> </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="p-2 bd-highlight">
+
+            </div>
+        </div>
+        <hr>
+
+        <div class="d-flex justify-content-between" style=" margin-top: -15px;">
+            <div class="p-2 bd-highlight"> </div>
+            <div class="p-2 bd-highlight" style="width: 50%;">
+                <input type="text" class="form-control form-control-sm " placeholder="Auto Busquedas" maxlength="50" [(ngModel)]="filtrarMantenimiento">
+            </div>
+            <div class="p-2 bd-highlight"> </div>
+        </div>
+
+        <div class="search-results tableFixHead">
+            <table class="table  table-hover table-sm">
+                <thead class="theadTable">
+
+                    <tr style="height: 40px !important;">
+                        <th scope="col">#</th>
+                        <th scope="col">Ruc</th>
+                        <th scope="col">Razon Social</th>
+                        <!-- <th scope="col">Icono</th> -->
+                        <th scope="col">Estado</th>
+                        <th class="text-center">Editar</th>
+                        <th class="text-center">Anular</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of proveedores |  filter: filtrarMantenimiento  ; index as j" [ngStyle]="item.estado == 0 && {'color': 'red'}">
+                        <th scope="row"> {{j + 1}} </th>
+                        <td>{{item.ruc_Empresa}}</td>
+                        <td>{{item.razonSocial_Empresa}}</td>
+                        <!-- <td>{{item.descripcion_estado}}</td> -->
+                        <td>{{item.descripcion_estado}}</td>
+                        <td class="text-center">
+                            <a class="puntero linkOpcion" (click)="editar(item) " title="editar"> Editar</a>
+                        </td>
+                        <td class="text-center">
+                            <a class="puntero linkOpcion" (click)="anular(item) " title="anular"> Anular</a>
+                        </td>
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+
+
+
+<div class="modal fade " id="modal_mantenimiento" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel  " aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="p-3 card ">
+                    <div class="d-flex justify-content-between flotante">
+                        <div class=" bd-highlight">
+                            <i class="fas fa-arrow-circle-left  fa-2x puntero" title="Retornar" (click)="cerrarModal()">  </i>
+                        </div>
+                        <div class=" bd-highlight">
+                            <h5 class="headerTitle"> REGISTRO DE EMPRESAS </h5>
+                        </div>
+                        <div class=" bd-highlight">
+                            <i class="far fa-times-circle fa-2x puntero" title="Retornar" (click)="cerrarModal()">  </i>
+                        </div>
+                    </div>
+                </div>
+                <hr style="background-color: white;">
+
+                <div class="row">
+                    <div class="col-12">
+                        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist" style="background-color:  #ffd100;">
+                            <li class="nav-item TabControl" *ngFor="let nameTab of tabControlDetalle; let first = first;">
+                                <a class="nav-link active" style="color:white" (click)="selectedTabControlDetalle = nameTab" data-toggle="pill" [class.active]="selectedTabControlDetalle===nameTab" role="tab" aria-controls="pills-home" aria-selected="true">{{nameTab}}</a>
+                            </li>
+                        </ul>
+
+                        <div class="containerDetalle">
+                            <div class="tab-content" id="pills-tabContent">
+                                <div *ngIf="selectedTabControlDetalle === tabControlDetalle[0]" role="tabpanel" class="tab-pane active">
+
+                                    <div class="card border-primary">
+                                        <div class="card-body">
+                                            <form [formGroup]="formParams" style=" margin-top: -15px;">
+                                                <div class="row">
+                                                    <div class="col-md-3">
+                                                        <label> ID Proveedor</label>
+                                                        <input type="text" class="form-control form-control-sm disabledForm " formControlName="id_Empresa">
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <label> RUC</label>
+                                                        <input type="text" class="form-control  " maxlength="20" formControlName="ruc_Empresa">
+                                                    </div>
+                                                    <div class="col-md-3">
+
+                                                        <br>
+                                                        <div class="custom-control custom-checkbox custom-control-inline ">
+                                                            <input type="checkbox" [id]="9999" formControlName="esProveedor" class="custom-control-input">
+                                                            <label class="custom-control-label" [for]="9999">ES PROVEEDOR </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <label> Razon Social</label>
+                                                        <input type="text" class="form-control  " maxlength="200" formControlName="razonSocial_Empresa">
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <label> Direccion Fiscal</label>
+                                                        <input type="text" class="form-control  " maxlength="250" formControlName="direccion_Empresa">
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label> Estado</label>
+                                                        <select class="form-control comboBox" formControlName="estado">
+                                                            <option value="-1"> [ --SELECCIONE-- ]</option>
+                                                            <option value="1"> Activo </option>
+                                                            <option value="0"> Anulado </option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </form>
+
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <label> Seleccione Icono</label>
+                                                    <div class="card-columns animated fadeIn">
+                                                        <div class="card shadow border-cards " *ngFor="let foto of detalleIconos ">
+                                                            <div class="card-body text-center ">
+                                                                <img [src]="foto.url_Icono" class="card-img-top rounded puntero" (click)="changeIcon(null,foto.id_Icono )" style="height: 30px;width: 30px;">
+                                                                <div class="text-center " style="margin-bottom: -15px;">
+                                                                    <input type="checkbox" [id]="foto.id_Icono" [(ngModel)]="foto.checkeado" (change)="changeIcon($event,foto.id_Icono )">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-flex justify-content-center">
+                                                <div class="p-2 bd-highlight">
+                                                    <button class="btn btn-success" (click)="saveUpdate()" title="Guardar la informacion"> <i class="fas fa-save"> Grabar</i></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div *ngIf="selectedTabControlDetalle === tabControlDetalle[1]" role="tabpanel" class="tab-pane active">
+
+                                    <div class="card border-primary">
+                                        <div class="card-body" *ngIf="this.idEmpresaGlobal > 0">
+
+                                            <form [formGroup]="formParamsCar" style=" margin-top: -15px;">
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <label> Placa vehiculo</label>
+                                                        <input type="text" class="form-control form-control-sm " formControlName="nro_Placa">
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <label> Cubicaje</label>
+                                                        <input #_cant type="text" class="form-control  " maxlength="20" formControlName="cantidadM3">
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="mt-4">
+                                                            <button class="btn btn-sm btn-success" (click)="guardarRegistroPlacas()" title="Guadar registro de placas"> <i class="fas fa-save"> Grabar</i></button>
+                                                            <button class="btn btn-sm btn-warning ml-2  " (click)="blank_Detalle()">  <i class="fa fa-plus-circle"> Nuevo</i> </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+
+                                            <hr>
+
+                                            <table class="table table-hover table-sm">
+                                                <thead class="theadTable">
+                                                    <tr>
+                                                        <th scope="col">#</th>
+                                                        <th scope="col" class="text-center">Placa</th>
+                                                        <th scope="col" class="text-center">Cubicaje</th>
+                                                        <th colspan="2" class="text-center">Acciones</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let item of  detalleVehiculos; index as i">
+                                                        <th scope="row"> {{i + 1}} </th>
+                                                        <td class="text-left">{{item.nro_Placa}}</td>
+                                                        <td class="text-left">{{item.cantidadM3 }}</td>
+                                                        <td class="text-center">
+                                                            <i class="puntero linkOpcion" title="Modificar" (click)="modificarArchivoSeleccionado(item)"> Modificar</i>
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <i class="puntero linkOpcion" title="Quitar" (click)="eliminarArchivoSeleccionado(item)"> Quitar</i>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="cerrarModal()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

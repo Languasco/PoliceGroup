@@ -1,0 +1,281 @@
+/* You can add global styles to this file, and also import other style files */
+
+body {
+    background-color: #fffae3;
+}
+
+label {
+    color: #6c757d !important;
+    font-family: 'Goldman', cursive;
+    margin-bottom: 2px;
+    margin-bottom: 2px;
+    font-size: 12px
+}
+
+hr {
+    background-color: #ffd100;
+}
+
+.form-control,
+input {
+    font-family: 'Goldman', cursive !important;
+}
+
+.form-control,
+input {
+    font-family: 'Goldman', cursive;
+    font-size: 12px;
+    height: 30px;
+    margin-bottom: 2px;
+}
+
+.puntero {
+    cursor: pointer;
+}
+
+.border-left-warning {
+    border-left: 5px solid #ffd100 !important
+}
+
+table thead {
+    font-size: 13px;
+    text-transform: uppercase;
+    font-family: 'Goldman', cursive;
+    ;
+}
+
+table tbody {
+    font-size: 12px;
+    color: #746660;
+    font-family: 'Goldman', cursive;
+}
+
+.h5,
+h5 {
+    font-size: 1rem;
+}
+
+.table .theadTable th {
+    background-color: black;
+    color: white;
+    border-color: #ffd100;
+    font-family: 'Goldman', cursive !important;
+}
+
+.table .theadTable2 th {
+    background-color: #ffd100 !important;
+    color: white;
+}
+
+
+/* 
+.table .theadTableModal th {
+   background-color: #FFE0CC;
+   color: #746660;
+   border-color: #B8AFAC;
+} */
+
+.fc-toolbar h2 {
+    text-transform: capitalize !important;
+}
+
+.bs-timepicker-field {
+    width: 40px !important;
+    padding: .375rem .55rem;
+}
+
+
+/* input file */
+
+
+/* .botonFile {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+    width: 98%;
+}
+
+.botonFile .btn {
+    border: 2px solid gray;
+    color: gray;
+    background-color: white;
+    padding: 8px 20px;
+    border-radius: 8px;
+    font-size: 10px;
+    font-weight: bold;
+} */
+
+
+/* Fin de input file */
+
+table {
+    border-collapse: separate;
+    border-spacing: 0.5px;
+}
+
+@media (min-width: 768px) {
+    .modal-lg,
+    .modal-xl {
+        max-width: 760px !important;
+    }
+    .navbar-expand-md .navbar-nav .nav-link {
+        padding-right: 3.5rem;
+        padding-left: .5rem;
+    }
+}
+
+@media (min-width: 992px) {
+    .modal-lg,
+    .modal-xl {
+        max-width: 1000px !important;
+    }
+}
+
+@media (min-width: 1200px) {
+    .modal-lg,
+    .modal-xl {
+        max-width: 1200px !important;
+    }
+}
+
+
+/* //// desabilitar elementos */
+
+.disabledForm {
+    pointer-events: none;
+    cursor: default;
+    opacity: 0.6;
+    background-color: #ecf0f3;
+    color: black;
+}
+
+
+/* //// desabilitar elementos */
+
+#example_info {
+    color: #333333;
+    font-size: 10px !important;
+}
+
+@media (min-width: 576px) {
+    .card-columns {
+        column-count: 3;
+    }
+}
+
+@media (min-width: 768px) {
+    .card-columns {
+        column-count: 4;
+    }
+}
+
+@media (min-width: 992px) {
+    .card-columns {
+        column-count: 4;
+    }
+}
+
+@media (min-width: 1200px) {
+    .card-columns {
+        column-count: 5;
+    }
+}
+
+
+/* input file */
+
+.botonFile {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+    width: 98%;
+}
+
+.botonFile .btn {
+    border: 2px solid gray;
+    color: gray;
+    background-color: white;
+    padding: 8px 20px;
+    border-radius: 8px;
+    font-size: 11px;
+}
+
+.botonFile input {
+    height: 40px !important;
+}
+
+
+/* //- cabecera del titulo  */
+
+
+/* .card-header {
+    background-color: #28a745 !important;
+    color: white;
+} */
+
+
+/* Fin de input file */
+
+
+/* resaltado de una table */
+
+tbody tr:hover {
+    /* background-color: aquamarine !important; */
+    cursor: pointer;
+}
+
+.linkOpcion {
+    color: red !important;
+    font-weight: 400;
+    text-decoration: underline !important;
+}
+
+.swal2-popup.swal2-toast .swal2-title {
+    font-size: 16px !important;
+    font-family: 'Goldman', cursive !important;
+    color: black !important;
+}
+
+.headerTitleModal {
+    color: #ffd100 !important;
+    font-family: 'Goldman', cursive !important;
+    font-weight: 600;
+    font-size: 20px;
+}
+
+
+/*  Menu ----- TreeeView */
+
+.treeview-container .row-item {
+    margin-bottom: -16px !important;
+    flex-wrap: nowrap;
+}
+
+.swal2-title {
+    color: #ffd100 !important;
+    font-size: 20px !important;
+    font-family: 'Goldman', cursive !important;
+}
+
+.swal2-content {
+    color: #314b75 !important;
+    font-size: 16px !important;
+    font-family: 'Goldman', cursive !important;
+}
+
+.treeview-container {
+    overflow-y: auto !important;
+    height: 600px !important;
+}
+
+.tituloModal {
+    color: #ffd100;
+    font-family: 'Goldman', cursive !important;
+    font-weight: 700;
+}
+
+.headerTitle {
+    color: black!important;
+    font-family: 'Goldman', cursive !important;
+    font-weight: 600;
+}

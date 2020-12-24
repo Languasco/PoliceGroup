@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="9f2456fac7964d649a7d43928dea4962" Name="Diagram1">
+        <EntityTypeShape EntityType="policegroupModel.tbl_Aceesos_Evento" Width="1.5" PointX="3" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="policegroupModel.tbl_Cargo_Personal" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="policegroupModel.tbl_Cliente" Width="1.5" PointX="2.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="policegroupModel.tbl_Definicion_Opciones" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="policegroupModel.tbl_Distritos" Width="1.5" PointX="5.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="policegroupModel.tbl_Empresas" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="policegroupModel.tbl_EstadoCelular" Width="1.5" PointX="7.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="policegroupModel.tbl_Estados" Width="1.5" PointX="4.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="policegroupModel.tbl_GrupoTabla_Cab" Width="1.5" PointX="9.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="policegroupModel.tbl_GrupoTabla_Det" Width="1.5" PointX="9.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="policegroupModel.TBL_Operarios_RegistroGPS" Width="1.5" PointX="6.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="policegroupModel.tbl_Parametro_Movil" Width="1.5" PointX="9.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="policegroupModel.tbl_ParteDiario_Cab" Width="1.5" PointX="11.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="policegroupModel.tbl_ParteDiario_Foto" Width="1.5" PointX="11.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="policegroupModel.tbl_Perfil" Width="1.5" PointX="8.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="policegroupModel.tbl_Perfil_Accesos" Width="1.5" PointX="10.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="policegroupModel.tbl_Servicios" Width="1.5" PointX="0.75" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="policegroupModel.tbl_Solicitud_Cab" Width="1.5" PointX="2.75" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="policegroupModel.tbl_Solicitud_Det" Width="1.5" PointX="13.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="policegroupModel.tbl_Usuarios" Width="1.5" PointX="0.75" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="policegroupModel.tbl_Usuarios_Empresa" Width="1.5" PointX="4.75" PointY="13.75" IsExpanded="true" />
+        <AssociationConnector Association="policegroupModel.FK__tbl_Acees__id_Op__3C69FB99" ManuallyRouted="false" />
+        <AssociationConnector Association="policegroupModel.FK__tbl_Acees__id_Us__3E52440B" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="policegroupModel.tbl_Personal" Width="1.5" PointX="13.375" PointY="12.75" />
+        <EntityTypeShape EntityType="policegroupModel.tbl_Personal_Empresa" Width="1.5" PointX="14.375" PointY="0.75" />
+        <EntityTypeShape EntityType="policegroupModel.tbl_Documento_Policial" Width="1.5" PointX="14.375" PointY="8.75" />
+        <EntityTypeShape EntityType="policegroupModel.tbl_Personal_Documento" Width="1.5" PointX="15.375" PointY="12.75" />
+        <EntityTypeShape EntityType="policegroupModel.tbl_Ibp_Cab" Width="1.5" PointX="16.375" PointY="0.75" />
+        <EntityTypeShape EntityType="policegroupModel.tbl_Ibp_Det" Width="1.5" PointX="16.375" PointY="5.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

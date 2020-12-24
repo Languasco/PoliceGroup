@@ -1,0 +1,114 @@
+<div class="card border-left-warning  shadow  " *ngIf="!showDetalle">
+    <div class="card-header">
+        <h5 class="headerTitle"> MANTENIMIENTO DE DISTRITOS</h5>
+    </div>
+    <div class="card-body">
+        <div class="d-flex justify-content-between" style=" margin-top: -15px;">
+            <div class="p-2 bd-highlight">
+                <button class="btn btn-warning " (click)="nuevo()" style="font-size: 13px;">  <i class="fa fa-plus-circle"> Nuevo</i> </button>
+            </div>
+            <div class="p-2 bd-highlight" style="width: 50%;">
+                <input type="text" class="form-control form-control-sm " placeholder="Auto Busquedas" maxlength="50" [(ngModel)]="filtrarMantenimiento">
+            </div>
+            <div class="p-2 bd-highlight"> </div>
+        </div>
+
+
+        <div class="search-results tableFixHead">
+            <table class="table  table-hover table-sm">
+                <thead class="theadTable">
+
+                    <tr style="height: 40px !important;">
+                        <th scope="col">#</th>
+                        <th scope="col">Zona</th>
+                        <th scope="col">Descripcion</th>
+                        <th scope="col">Estado</th>
+                        <th class="text-center">Editar</th>
+                        <th class="text-center">Anular</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of distritos |  filter: filtrarMantenimiento  ; index as j" [ngStyle]="item.estado == 0 && {'color': 'red'}">
+                        <th scope="row"> {{j + 1}} </th>
+                        <td>{{item.nombreDistrito}}</td>
+                        <td>{{item.nombreDistrito}}</td>
+                        <td>{{item.descripcion_estado}}</td>
+                        <td class="text-center">
+                            <a class="puntero linkOpcion" (click)="editar(item) " title="editar"> Editar</a>
+                        </td>
+                        <td class="text-center">
+                            <a class="puntero linkOpcion" (click)="anular(item) " title="anular"> Anular</a>
+                        </td>
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<div class="d-flex justify-content-between">
+    <div class="p-2"></div>
+    <div class="p-2" style="width: 70%;">
+        <div class="card border-left-warning shadow  mt-3 " *ngIf="showDetalle">
+            <div class="card-body">
+
+                <div class="d-flex justify-content-between flotante">
+                    <div class=" bd-highlight">
+                        <i class="fas fa-arrow-circle-left  fa-2x puntero" title="Retornar" (click)="regresarListado()">  </i>
+                    </div>
+                    <div class=" bd-highlight">
+                        <h5 class="headerTitle"> REGISTRO DISTRITOS </h5>
+                    </div>
+                    <div class=" bd-highlight">
+                        <i class="far fa-times-circle fa-2x puntero" title="Retornar" (click)="regresarListado()">  </i>
+                    </div>
+                </div>
+                <hr>
+                <fieldset class="shadow">
+                    <legend>Datos Generales</legend>
+                    <div class="panel panel-default ">
+                        <div class="panel-body">
+                            <form [formGroup]="formParams">
+                                <div class="row mb-2">
+                                    <div class="col-md-6">
+                                        <label> Zonas</label>
+                                        <select class="form-control comboBox" formControlName="id_Zona">
+                                                <option value="0"> [ --SELECCIONE-- ]</option>
+                                                <option [value]="zona.id_Zona" *ngFor="let zona of zonas">{{zona.nombre_Zona}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row mb-1">
+                                    <div class="col-md-12">
+                                        <label> Distritos</label>
+                                        <input type="text" class="form-control form-control-sm" maxlength="100" formControlName="nombreDistrito">
+                                    </div>
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="col-md-6">
+                                        <label> Estado</label>
+                                        <select class="form-control comboBox" formControlName="estado">
+                                                <option value="-1"> [ --SELECCIONE-- ]</option>
+                                                <option value="1"> Activo </option>
+                                                <option value="0"> Anulado </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </form>
+                            <div class="d-flex justify-content-end">
+                                <div class="p-2 bd-highlight">
+                                    <button class="btn btn-success" (click)="saveUpdate()" title="Guardar la informacion"> <i class="fas fa-save"> Grabar</i></button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </fieldset>
+
+            </div>
+        </div>
+    </div>
+    <div class="p-2"></div>
+</div>

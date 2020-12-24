@@ -1,0 +1,40 @@
+<div class="card border-left-warning  shadow   ">
+    <div class="card-header">
+        <h5 class="headerTitle"> UBICACION DE PERSONAL </h5>
+    </div>
+    <div class="card-body">
+
+        <form [formGroup]="formParamsFiltro">
+            <div class="row" style=" margin-top: -15px;">
+                <div class="col-md-3">
+                    <label for=""> Empresa</label>
+                    <select class="form-control comboBox" formControlName="idEmpresa">
+                        <option value="0"> [ -- SELECCIONE -- ]</option>
+                        <option [value]="empresa.id_Empresa" *ngFor="let empresa of empresas">{{empresa.razonSocial_Empresa}}</option>
+                    </select>
+                </div>
+
+                <div class="col-md-3">
+                    <label> fecha Gps </label>
+                    <input class="form-control" #datepickerYMD="bsDatepicker" bsDatepicker [bsConfig]="datepiekerConfig" formControlName="fechaGps">
+                </div>
+                <div class="col-md-2">
+                    <div class="mt-4">
+                        <button class="btn btn-primary  btn-block " (click)="mostrarInformacionMapa()" style="font-size: 13px;">  <i class="fas fa-search"> Actualizar</i> </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <div class="row mt-3">
+            <div id="formMapa" class="col-md-12">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div style="width: 100%; height: 550px;" #mapa id="id_mapa"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

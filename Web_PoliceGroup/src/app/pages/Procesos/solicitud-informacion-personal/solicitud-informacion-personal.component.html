@@ -1,0 +1,182 @@
+<div class="card border-left-warning  shadow   ">
+    <div class="card-header">
+        <h5 class="headerTitle"> SOLICITUD DE INFORMACION BASICA DE PERSONAS </h5>
+    </div>
+    <div class="card-body">
+
+        <form [formGroup]="formParamsFiltro">
+            <div class="row" style="    margin-top: -15px;">
+                <div class="col-md-3">
+                    <label for=""> Empresa</label>
+                    <select class="form-control comboBox" formControlName="idEmpresa" (change)="onChange_empresa($event.target.value)">
+                        <option value="0"> [ -- SELECCIONE-- ]</option>
+                        <option [value]="empresa.id_Empresa" *ngFor="let empresa of empresas">{{empresa.razonSocial_Empresa}}</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label for="" style="color: #007bff !important"> Puede solicitar 10 solicitudes gratis al mes.</label>
+                    <br>
+                    <label for="" style="color: green !important; font-size: 13px;"> Solicitud Realizada : {{cantSolicitud_Global}}</label>
+                </div>
+
+                <div class="col-md-3">
+                    <label for=""> Estado</label>
+                    <select class="form-control comboBox" formControlName="idEstado">
+                        <option value="0"> [ -- TODOS-- ]</option>
+                        <option [value]="estado.id_Estado" *ngFor="let estado of estados">{{estado.descripcion_estado}}</option>
+                    </select>
+                </div>
+
+                <div class="col-md-3">
+                    <br>
+                    <div class="text-center">
+                        <button class="btn btn-primary " (click)="mostrarInformacion()" style="font-size: 13px;">  <i class="fas fa-search"> Mostrar</i> </button>
+                        <button class="btn btn-warning ml-2 " (click)="nuevo()" style="font-size: 13px;">  <i class="fa fa-plus-circle"> Nuevo</i> </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <hr>
+
+        <div class="d-flex justify-content-between" style=" margin-top: -15px;">
+            <div class="p-2 bd-highlight"> </div>
+            <div class="p-2 bd-highlight" style="width: 50%;">
+                <input type="text" class="form-control form-control-sm " placeholder="Auto Busquedas" maxlength="50" [(ngModel)]="filtrarMantenimiento">
+            </div>
+            <div class="p-2 bd-highlight"> </div>
+        </div>
+
+        <div class="search-results tableFixHead">
+            <table class="table  table-hover table-sm">
+                <thead class="theadTable">
+
+                    <tr style="height: 40px !important;">
+                        <th scope="col">#</th>
+                        <th scope="col">dni</th>
+                        <th scope="col">nombre y apellido</th>
+                        <th scope="col">Estado</th>
+                        <th class="text-center">Editar</th>
+                        <th class="text-center">Anular</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of solicitudesCab |  filter: filtrarMantenimiento  ; index as j" [ngStyle]="item.id_estado == 16 && {'color': 'red'}">
+                        <th scope="row"> {{j + 1}} </th>
+                        <td>{{item.nro_Documento}}</td>
+                        <td>{{item.nombre_personal}} {{item.apellidos_Peronal}} </td>
+                        <td>{{item.descripcionEstado}}</td>
+
+                        <td class="text-center">
+                            <a class="puntero linkOpcion" (click)="editar(item) " title="editar"> Editar</a>
+                        </td>
+                        <td class="text-center">
+                            <a class="puntero linkOpcion" *ngIf="item.id_estado == 13" (click)="anular(item) " title="anular"> Anular</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+
+
+
+
+
+
+
+<div class="modal fade " id="modal_mantenimiento" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel  " aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable " role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="p-3 card ">
+                    <div class="d-flex justify-content-between flotante">
+                        <div class=" bd-highlight">
+                            <i class="fas fa-arrow-circle-left  fa-2x puntero" title="Retornar" (click)="cerrarModal()">  </i>
+                        </div>
+                        <div class=" bd-highlight">
+                            <h5 class="headerTitle"> SOLICITUD DE INFORMACION BASICA DEL PERSONAL </h5>
+                        </div>
+                        <div class=" bd-highlight">
+                            <i class="far fa-times-circle fa-2x puntero" title="Retornar" (click)="cerrarModal()">  </i>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <fieldset class="shadow" style=" margin-top: 2  px;">
+                    <legend> DATOS </legend>
+                    <div class="panel panel-default ">
+                        <div class="panel-body">
+
+                            <form [formGroup]="formParams">
+
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <label> ID </label>
+                                        <input type="text" class="form-control form-control-sm disabledForm " formControlName="id_Ibp_Cab">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label> Nro Documento  </label>
+                                        <input type="text" class="form-control " formControlName="nro_Documento">
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-7">
+                                        <label> Apellidos  </label>
+                                        <input type="text" class="form-control " formControlName="apellidos_Peronal">
+                                    </div>
+                                    <div class="col-md-5">
+                                        <label> Nombres  </label>
+                                        <input type="text" class="form-control " formControlName="nombre_personal">
+                                    </div>
+                                </div>
+
+                            </form>
+
+                        </div>
+                    </div>
+                </fieldset>
+
+                <fieldset class="shadow mt-2">
+                    <legend> INFORMACION A SOLICITAR </legend>
+                    <div class="panel panel-default ">
+                        <div class="panel-body">
+
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item" *ngFor="let item of documentosMasivas">
+                                            <div class="custom-control custom-checkbox " style="margin-bottom: -5px;">
+                                                <input type="checkbox" [id]="item.id_doc" [(ngModel)]="item.checkeado" class="custom-control-input">
+                                                <label class="custom-control-label" [for]="item.id_doc">  {{item.descripcion_doc}} </label>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </fieldset>
+
+
+
+                <br>
+
+                <div class="d-flex justify-content-center" *ngIf="id_estado_Global == 13">
+                    <div class="p-2 bd-highlight">
+                        <button class="btn btn-success" (click)="saveUpdate()" title="Guardar la informacion"> <i class="fas fa-save"> SOLICITAR </i></button>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="cerrarModal()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

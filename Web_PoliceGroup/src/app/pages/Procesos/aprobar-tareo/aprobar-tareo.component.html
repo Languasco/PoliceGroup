@@ -1,0 +1,241 @@
+<div class="card border-left-warning  shadow   ">
+    <div class="card-header">
+        <h5 class="headerTitle"> APROBACION DE TAREO </h5>
+    </div>
+    <div class="card-body">
+
+        <form [formGroup]="formParamsFiltro">
+            <div class="row" style=" margin-top: -15px;">
+                <div class="col-md-3">
+                    <label for=""> Empresa</label>
+                    <select class="form-control comboBox" formControlName="idEmpresa">
+                        <option value="0"> [ -- TODOS-- ]</option>
+                        <option [value]="empresa.id_Empresa" *ngFor="let empresa of empresas">{{empresa.razonSocial_Empresa}}</option>
+                    </select>
+                </div>
+
+                <div class="col-md-3">
+                    <label for=""> Servicio</label>
+                    <select class="form-control comboBox" formControlName="Codservicio">
+                        <option value="0"> [ --TODOS-- ]</option>
+                        <option [value]="tipo.id_Servicios" *ngFor="let tipo of servicios">{{tipo.nombreServicio}}</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="control-label"> Rango Fechas </label>
+                    <div class="input-group">
+                        <input class="form-control" #datepickerYMD="bsDatepicker" bsDatepicker formControlName="fecha_ini" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY'  }">
+                        <span class="input-group-addon">-</span>
+                        <input class="form-control" #datepickerYMD="bsDatepicker" bsDatepicker formControlName="fecha_fin" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="mt-4">
+                        <button class="btn btn-sm btn-primary " (click)="mostrarInformacion();" style="font-size: 13px;">  <i class="fas fa-search"> Actualizar</i> </button>
+                        <button class="btn btn-sm btn-warning ml-2  " (click)="descargarGrilla()" style="font-size: 13px;">  <i class="fa fa-download"> Exportar</i> </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <div class="row mt-2">
+            <div class="col-12">
+
+                <div class="d-flex justify-content-between " *ngIf="tareoCab.length > 0">
+                    <div class="">
+                        <div class="custom-control custom-checkbox custom-control-inline" style="margin-left: 5px;">
+                            <input type="checkbox" [id]="0" [(ngModel)]="checkeadoAll" (click)="marcarTodos()" class="custom-control-input">
+                            <label class="custom-control-label" [for]="0"> Marcar Todo </label>
+                        </div>
+                    </div>
+                    <div class="" style="width: 60%;">
+                        <div class="p-2 bd-highlight">
+                            <input type="text" class="form-control form-control-sm " placeholder="Auto Busquedas" maxlength="50" [(ngModel)]="filtrarMantenimiento">
+                        </div>
+                    </div>
+                    <div class="">
+                        <div class="p-2">
+
+                            <button class="btn btn-sm btn-outline-success " (click)="aprobarRechazarTareo_masivo('A')" style="font-size: 13px;">  <i class="fas fa-check"> Aprobar</i> </button>
+                            <button class="btn btn-sm btn-outline-danger ml-2  " (click)="aprobarRechazarTareo_masivo('R')" style="font-size: 13px;">  <i class="fas fa-ban"> Observacion </i> </button>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="search-results tableFixHead">
+                    <table class="table  table-hover table-sm">
+                        <thead class="theadTable">
+
+                            <tr style="height: 40px !important;">
+                                <th class="text-center">Check</th>
+                                <th scope="col">#</th>
+                                <th class="text-center">Dia</th>
+                                <th class="text-center">Personal</th>
+                                <th class="text-center">JefeCuadrilla</th>
+                                <th class="text-center">Direccion</th>
+                                <th class="text-center">NroOrden</th>
+
+                                <th class="text-center"> Hora.IniciAL</th>
+                                <th class="text-center">Hora Termino</th>
+                                <th class="text-center">total tiempo</th>
+
+                                <th class="text-center">Total Horas</th>
+                                <!-- <th class="text-center">Precio</th>
+                                <th class="text-center">Total Soles</th> -->
+                                <th class="text-center">INCIDENCIAS</th>
+                                <th colspan="2" class="text-center">ACCIONES</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of tareoCab |  filter: filtrarMantenimiento  ; index as j" style="color: black;" [ngStyle]="{'background-color':item.color}">
+                                <td>
+                                    <div class="custom-control custom-checkbox custom-control-inline ">
+                                        <input type="checkbox" [id]="item.id_ParteDiario" [(ngModel)]="item.checkeado" class="custom-control-input">
+                                        <label class="custom-control-label" [for]="item.id_ParteDiario"> </label>
+                                    </div>
+                                </td>
+                                <td>{{j + 1}}</td>
+                                <td>{{item.dia}}</td>
+                                <td>
+                                    <div style="width: 200px;">
+                                        {{item.personal}}
+                                    </div>
+                                </td>
+                                <td>{{item.jefeCuadrilla}}</td>
+                                <td>
+                                    <div style="width: 350px;">
+                                        {{item.direccion}}
+                                    </div>
+                                </td>
+                                <td>{{item.nroOrden}}</td>
+
+                                <td class="text-left">{{item.horaInicio}}</td>
+                                <td class="text-center">{{item.horaTermino}}</td>
+                                <td class="text-center">{{item.totalTiempo}}</td>
+
+                                <td class="text-right">{{item.totalHoras | number : '1.2-2'}}</td>
+                                <!-- <td class="text-right">{{item.precio}}</td>
+                                <td class="text-right">{{item.totalSoles | number : '1.2-2' }}</td> -->
+                                <td class="text-center">
+                                    <span class="badge badge-primary puntero" style="padding: 5px;" (click)="abrirModal_visorFotos(item)">  Ver </span>
+                                </td>
+                                <td class="text-center">
+                                    <span class="badge badge-success puntero" style="padding: 5px;" (click)="aprobarRechazarTareo('A',item)">  Aprobar </span>
+                                </td>
+                                <td class="text-center">
+                                    <span class="badge badge-danger puntero" style="padding: 5px;" (click)="open_modalRechazar(item)">  Observacion </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+
+<div class="modal fade " id="modal_visorFotos" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel  " aria-hidden="true">
+    <div class="modal-dialog modal-lg   modal-dialog-scrollable " role="document">
+        <div class="modal-content">
+            <div class="p-3 card ">
+                <div class="d-flex justify-content-between flotante">
+                    <div class=" bd-highlight">
+                        <i class="fas fa-arrow-circle-left  fa-2x puntero" title="Retornar" (click)="cerrarModal_visor()">  </i>
+                    </div>
+                    <div class=" bd-highlight">
+                        <h5 class="tituloModal" style="color: black;"> INCIDENCIAS </h5>
+                    </div>
+                    <div class=" bd-highlight">
+                        <i class="far fa-times-circle fa-2x puntero" title="Retornar" (click)="cerrarModal_visor()">  </i>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body">
+
+                <div class="d-flex justify-content-between">
+                    <div class="p-2 bd-highlight" *ngIf="this.fotosDetalle">
+
+                    </div>
+                    <div class="p-2 bd-highlight">
+
+                    </div>
+                    <div class="p-2 bd-highlight">
+                        <button style="margin-top: -22px !important; font-size: 11px;" class="btn  btn-sm  btn-warning " (click)="descargarFotosTareo()" title="Descargar">
+                            <i class="fas fa-file-download"> Descargar</i> 
+                        </button>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card-columns animated fadeIn">
+                            <div class="card shadow  border-cards " *ngFor="let foto of fotosDetalle ">
+                                <a>
+                                    <img [src]="foto.urlFoto" class="card-img-top img_anuncio" alt="...">
+                                </a>
+                                <div class="card-body ">
+                                    <div class="text-center ">
+                                        <button type="button" class="btn btn-block btn-outline-danger" (click)="eliminarFotoTareo(foto)"> Eliminar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="modal_aprobacion" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered " role="document">
+        <div class="modal-content" style="    border-color: red;">
+            <div class="modal-header">
+                <div class="clearfix">
+                    <h1 class="modal-title float-right text-danger"> OBS</h1>
+                </div>
+
+                <button type="button" class="close" (click)="cerrarModalAprobar()" aria-label="Close">  <span aria-hidden="true">&times;</span>     </button>
+            </div>
+            <div class="modal-body">
+
+                <form [formGroup]="formParamsRechazo" style=" margin-top: -15px;">
+                    <fieldset class="shadow-sm mt-2">
+                        <legend>DETALLE</legend>
+                        <div class="panel panel-default ">
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label> Observacion </label>
+                                                <textarea class="form-control" style="background: rgb(253, 253, 120);; color: black; font-weight: 600;font-size: 13px;" maxlength="255" formControlName="descripcionRespuesta" rows="3"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+
+                <div class="d-flex justify-content-center">
+                    <div class="p-2 bd-highlight">
+                        <button class="btn btn-outline-danger ml-2" title="Aceptar" (click)="guardarRechazo()"> <i class="fas fa-window-close"> Aceptar </i></button>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>

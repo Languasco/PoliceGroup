@@ -1,0 +1,318 @@
+<div class="card border-left-warning  shadow   ">
+    <div class="card-header">
+        <h5 class="headerTitle"> BANDEJA DE ASIGNACION </h5>
+    </div>
+    <div class="card-body">
+
+        <form [formGroup]="formParamsFiltro">
+            <div class="row" style=" margin-top: -15px;">
+
+                <div class="col-md-2">
+                    <label for=""> Empresa</label>
+                    <select class="form-control comboBox" formControlName="idEmpresa">
+                        <option value="0"> [ -- TODOS-- ]</option>
+                        <option [value]="empresa.id_Empresa" *ngFor="let empresa of empresas">{{empresa.razonSocial_Empresa}}</option>
+                    </select>
+                </div>
+
+                <div class="col-md-2">
+                    <label for=""> Servicio</label>
+                    <select class="form-control comboBox" formControlName="servicio">
+                        <option [value]="sol.id_Servicios" *ngFor="let sol of servicios">{{sol.nombreServicio}}</option>
+                    </select>
+                </div>
+
+                <div class="col-md-4">
+                    <label class="control-label"> Rango Fechas de Atencion </label>
+                    <div class="input-group">
+                        <input class="form-control" #datepickerYMD="bsDatepicker" bsDatepicker formControlName="fecha_ini" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY'  }">
+                        <span class="input-group-addon">-</span>
+                        <input class="form-control" #datepickerYMD="bsDatepicker" bsDatepicker formControlName="fecha_fin" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }">
+                    </div>
+                </div>
+
+                <div class="col-md-2 ">
+                    <label for=""> Estado</label>
+                    <select class="form-control comboBox" formControlName="idEstado">
+                        <option value="0"> [ --TODOS-- ]</option>
+                        <option [value]="estado.id_Estado" *ngFor="let estado of estados">{{estado.descripcion_estado}}</option>
+                    </select>
+                </div>
+
+                <div class="col-md-2">
+                    <div class="btn-group mt-4 ">
+                        <button type="button" class="btn btn-dark dropdown-toggle" style="font-family: 'Goldman', cursive ;font-size: 15px;font-weight: 600;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          - ACCIONES -
+                        </button>
+                        <div class="dropdown-menu text-center">
+                            <div class="p-2">
+                                <button class="btn btn-primary btn-block  " style="font-size: 13px;" (click)="mostrarInformacion()">  <i class="fa fa-search"> Mostrar</i> </button>
+                            </div>
+
+                            <!-- <div class="p-2">
+                                <button class="btn btn-success btn-block  " (click)="nuevo()" style="font-size: 13px;">  <i class="fa fa-plus-circle"> Nuevo</i> </button>
+                            </div> -->
+
+                            <div class="dropdown-divider"></div>
+                            <div class="p-2">
+                                <button class="btn btn-warning btn-block  " (click)="descargarGrilla()" style="font-size: 13px;">  <i class="fa fa-download"> Exportar</i> </button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <hr>
+
+        <div class="tableFixHead">
+            <table class="table  table-hover table-sm">
+                <thead class="theadTable">
+
+                    <tr style="height: 40px !important;">
+
+                        <th scope="col">#</th>
+                        <th class="text-center">Nro Solicitud</th>
+                        <th class="text-center">Area</th>
+                        <th class="text-center">Solicitante</th>
+
+
+                        <th class="text-center">fecha Asignacion</th>
+                        <th class="text-center">Cant. Efectivos</th>
+                        <th class="text-center">Estado</th>
+                        <th class="text-center">Ver Efectivo</th>
+                        <th class="text-center">Accion</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of solicitudesCab |  filter: filtrarMantenimiento  ; index as j" [ngStyle]="item.estado == 11 && {'color': 'red'}">
+                        <td scope="row"> {{j + 1}} </td>
+                        <td>{{item.nroSolicitud}}</td>
+                        <td>{{item.descripcionArea}}</td>
+                        <td>{{item.descripcionSolicitante}}</td>
+
+                        <td class="text-center">{{item.fechaAtencion | date:"dd/MM/yyyy" }}</td>
+                        <td class="text-right">{{item.cantidadEfectivos}}</td>
+                        <td class="text-center">{{item.descripcionEstado}}</td>
+                        <td class="text-center">
+                            <span class="badge badge-dark puntero" (click)="efectivosPoliciales(item)" style="padding: 5px;">  ver </span>
+                        </td>
+                        <td class="text-center">
+                            <span class="badge badge-success puntero" *ngIf="item.idEstado == 10" (click)="editar(item)" style="padding: 5px;">  Asignar </span>
+                            <span class="badge badge-primary puntero" *ngIf="item.idEstado == 3" (click)="editar(item)" style="padding: 5px;">  ver </span>
+                        </td>
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+    </div>
+</div>
+
+
+
+
+
+
+<div class="modal fade " id="modal_mantenimiento" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel  " aria-hidden="true">
+    <div class="modal-dialog  " role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="p-3 card ">
+                    <div class="d-flex justify-content-between flotante">
+                        <div class=" bd-highlight">
+                            <i class="fas fa-arrow-circle-left  fa-2x puntero" title="Retornar" (click)="cerrarModal()">  </i>
+                        </div>
+                        <div class="tituloModal">
+                            <p> REGISTRO DE SOLICITUD </p>
+                        </div>
+                        <div class=" bd-highlight">
+                            <i class="far fa-times-circle fa-2x puntero" title="Retornar" (click)="cerrarModal()">  </i>
+                        </div>
+                    </div>
+                </div>
+                <hr style="background-color: white;">
+
+                <form [formGroup]="formParams" style=" margin-top: -15px;">
+
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label> Nro Solicitud </label>
+                            <input type="text" class="form-control  disabledForm" formControlName="id_Solicitud_Cab">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="mt-3" *ngIf="flagCerrar">
+                                <button class="btn btn-danger ml-2" *ngIf="idEstado_global == 10" title="Guardar la informacion" (click)="cerrarAsignacion()"> <i class="fas fa-save"> Cerrar Asignacion </i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label> Fecha Atencion </label>
+                            <input class="form-control disabledForm" #datepickerYMD="bsDatepicker" bsDatepicker [bsConfig]="datepiekerConfig" formControlName="fechaAtencion">
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for=""> Servicio</label>
+                            <select class="form-control comboBox disabledForm" formControlName="id_Servicios">
+                                <option value="0"> [ -- SELECCIONE-- ]</option>
+                                <option [value]="sol.id_Servicios" *ngFor="let sol of servicios">{{sol.nombreServicio}}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for=""> Jefe Cuadrilla</label>
+                            <select id="cboJefeCuadrilla" class="form-control comboBox  disabledForm " formControlName="id_PersonalJefeCuadrilla">
+                                <option value="0"> [ -- SELECCIONE-- ]</option>
+                                <option [value]="jefe.id_jefeCuadrilla" *ngFor="let jefe of jefeCuadrillas">{{jefe.jefeCuadrilla}}</option>
+                            </select>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label> Cantidad Efectivos  </label>
+                            <input type="text" class="form-control disabledForm " formControlName="cantidadEfectivos">
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label> Cantidad Horas  </label>
+                            <input type="number" class="form-control disabledForm " formControlName="cantidadHoras">
+                        </div>
+                    </div>
+
+
+                    <!-- <div class="row">
+                        <div class="col-md-6">
+                            <div class="custom-control custom-checkbox custom-control-inline ">
+                                <input type="checkbox" [id]="9999" formControlName="asigna_JC" (change)="onChange_jefeCuadrilla($event)" class="custom-control-input">
+                                <label class="custom-control-label" [for]="9999">Deseo Asignar a Jefe Cuadrilla </label>
+                            </div>
+                        </div>
+                    </div> -->
+                    <!-- 
+                    <div class="row">
+                        <div class="col-md-6 ">
+                            <label for=""> Estado</label>
+                            <select class="form-control comboBox" formControlName="estado">
+                                <option value="0"> [ -- SELECCIONE-- ]</option>
+                                <option [value]="estado.id_Estado" *ngFor="let estado of estadosBD">{{estado.descripcion_estado}}</option>
+                            </select>
+                        </div>
+                    </div> -->
+
+                </form>
+
+
+
+                <fieldset class="shadow-sm mt-2">
+                    <legend>SELECCIONE RESGUARDO</legend>
+                    <div class="panel panel-default ">
+                        <div class="panel-body">
+
+                            <form [formGroup]="formParamsDet">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <label for=""> Nombre del Efectivo </label>
+                                        <select class="form-control comboBox" formControlName="id_UsuarioEfectivoPolicial">
+                                            <option value="0"> [ -- SELECCIONE-- ]</option>
+                                            <option [value]="estado.idEfectivo" *ngFor="let estado of listResguardoEventos">
+                                                {{estado.nombreEfectivo}} ____________ ( {{estado.cantidadEventos}} ) Eventos 
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="mt-3 " *ngIf="!flagCerrar">
+                                            <button class="btn btn-success" *ngIf="idEstado_global == 10" (click)="guardarDet()" title="Guardar la informacion"> <i class="fas fa-save"> Grabar</i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <br>
+                            <div class="search-results tableFixHead">
+                                <table class="table  table-hover table-sm">
+                                    <thead class="theadTable2">
+                                        <tr style="height: 40px !important;">
+                                            <th scope="col">#</th>
+                                            <th scope="col">Nombre Efectivo</th>
+                                            <th class="text-center">Eliminar</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let item of solicitudesDet; index as j">
+                                            <th scope="row"> {{j + 1}} </th>
+                                            <td>{{item.nombreEfectivo}} </td>
+                                            <td class="text-center">
+                                                <i class="puntero linkOpcion" title="Quitar" (click)="eliminarSolicitudDetalle(item)"> Eliminar</i>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                </fieldset>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade " id="modal_efectivos" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel  " aria-hidden="true">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="p-3 card ">
+                    <div class="d-flex justify-content-between flotante">
+                        <div class=" bd-highlight">
+                            <i class="fas fa-arrow-circle-left  fa-2x puntero" title="Retornar" (click)="cerrarModalEfectivos()">  </i>
+                        </div>
+                        <div class="tituloModal">
+                            <p>LISTA DE EFECTIVOS ASIGNADOS </p>
+                        </div>
+                        <div class=" bd-highlight">
+                            <i class="far fa-times-circle fa-2x puntero" title="Retornar" (click)="cerrarModalEfectivos()">  </i>
+                        </div>
+                    </div>
+                </div>
+                <hr style="background-color: white;">
+
+                <div class="tableFixHead">
+                    <table class="table  table-hover table-sm">
+                        <thead class="theadTable">
+
+                            <tr style="height: 40px !important;">
+                                <th scope="col">#</th>
+                                <th class="text-center">Nombre de Efectivo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of efectivoPoliciales; index as j">
+                                <td scope="row"> {{j + 1}} </td>
+                                <td>{{item.efectivoPolicial}}</td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,35 @@
+<div class="login" *ngIf="!showMenu">
+    <div class="d-flex justify-content-between">
+        <div class="p-2 bd-highlight"> </div>
+        <div class="p-2 bd-highlight center-text pt-5">
+            <div class="login-content">
+
+                <form [formGroup]="formParams" style="  border: 0.5px solid #B8AFAC; padding: 30px; background-color: black;">
+                    <img src="./assets/img/logo.png">
+                    <h2 class="title" style="color: #ffd100;">SCORPION </h2>
+
+
+                    <div class="input-div one">
+                        <div class="i">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="div">
+                            <input type="text" class="form-control" style="font-size: 15px !important;" formControlName="usuario" placeholder="Usuario" autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="input-div pass">
+                        <div class="i">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                        <div class="div">
+                            <input type="password" class="form-control" style="font-size: 15px !important;" formControlName="contrasenia" placeholder="Contraseña" autocomplete="off">
+                        </div>
+                    </div>
+
+                    <button type="button" class="btn btn-outline-warning" (click)="iniciarSesion()"> Ingresar</button>
+                </form>
+            </div>
+        </div>
+        <div class="p-2 bd-highlight"> </div>
+    </div>
+</div>

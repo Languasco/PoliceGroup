@@ -1,0 +1,66 @@
+<div class="card border-left-warning  shadow   ">
+    <div class="card-header">
+        <h5 class="headerTitle"> UBICACIONES DE OT </h5>
+    </div>
+    <div class="card-body">
+
+        <form [formGroup]="formParamsFiltro">
+            <div class="row" style=" margin-top: -15px;">
+                <div class="col-md-2">
+                    <label for=""> Servicio</label>
+                    <select class="form-control comboBox" formControlName="idServicio">
+                        <option value="0"> [ --SELECCIONE-- ]</option>
+                        <option [value]="tipo.id_servicio" *ngFor="let tipo of servicios">{{tipo.nombreServicio}}</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label> fecha Gps </label>
+                    <input class="form-control" #datepickerYMD="bsDatepicker" bsDatepicker [bsConfig]="datepiekerConfig" formControlName="fechaGps">
+                </div>
+                <div class="col-md-2">
+                    <label for=""> Tipo OT</label>
+                    <select class="form-control comboBox" formControlName="idTipoOT">
+                        <option value="0"> [ --SELECCIONE-- ]</option>
+                        <option [value]="tipo.id_detalleTabla" *ngFor="let tipo of tipoOrdenTrabajo">{{tipo.descripcion_grupoTabla}}</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label for=""> Proveedor</label>
+                    <select class="form-control comboBox" formControlName="idProveedor">
+                        <option value="0"> [ --TODOS-- ]</option>
+                        <option [value]="item.id_Empresa" *ngFor="let item of proveedor">{{item.razonSocial_Empresa}}</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label for=""> Estado</label>
+                    <select class="form-control comboBox" formControlName="idEstado">
+                        <option value="0"> [ -- TODOS -- ]</option>
+                        <option [value]="estado.id_Estado" *ngFor="let estado of estados">{{estado.descripcion_estado}}</option>
+                    </select>
+                </div>
+
+
+                <div class="col-md-2">
+                    <div class="mt-4">
+                        <button class="btn btn-primary  btn-block " (click)="mostrarInformacionMapa()" style="font-size: 13px;">  <i class="fas fa-search"> Actualizar</i> </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+
+        <div class="row mt-3">
+            <div id="formMapa" class="col-md-12">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div style="width: 100%; height: 550px;" #mapa id="id_mapa"></div>
+                        <div id="content_leyenda" style="display:none">
+                            <h3></h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,46 @@
+<app-spinnerloading></app-spinnerloading>
+
+<!-- <nav class="navbar navbar-dark bg-white navbar-expand-md   sticky-top" *ngIf="showMenu"> -->
+
+<nav class="navbar navbar-dark bg-success navbar-expand-md   sticky-top" *ngIf="showMenu">
+    <!-- <a class="navbar-brand" [routerLink]="['/']" >
+        <img src="./assets/img/logoDominion.jpeg" style="width:138px; height: 30px;" class="card-img-top " alt="...">
+    </a> -->
+
+    <a class="navbar-brand " style=" cursor: pointer; font-family: 'Goldman', cursive;  color: #1d2124 !important ;" [routerLink]="['/']">
+        <i class="fas fa-house-user fa-1x"></i> POLICE GROUP
+    </a>
+
+    <button class="navbar-toggler bg-warning" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav m-auto ">
+            <li class="nav-item dropdown " *ngFor="let menu of menuPrincipal" style="  color: white !important;">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" style="color: #1d2124 !important ; font-weight: 600; font-size: 14px; font-family:'Goldman', cursive !important" aria-haspopup="true" aria-expanded="false">
+                    <i [class]="menu.urlmagene_principal"></i> {{menu.nombre_principal | uppercase}}
+                </a>
+
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" [routerLink]="menu2.url_page" *ngFor="let menu2 of menu.listMenu">  {{menu2.nombre_page | uppercase }} </a>
+                </div>
+            </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0 formBoton">
+            <div class="dropdown" *ngIf="showMenu">
+                <button class="btn btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                 {{nameUser}}
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+
+                    <a class="dropdown-item" href="#" (click)="cerrarSesion()">
+                        <i class="fas fa-sign-out-alt "></i> Cerrar Sesion
+                    </a>
+
+                </div>
+            </div>
+        </form>
+
+    </div>
+</nav>
